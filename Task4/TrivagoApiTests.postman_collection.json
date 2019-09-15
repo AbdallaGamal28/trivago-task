@@ -1,0 +1,201 @@
+{
+	"info": {
+		"_postman_id": "82e7408c-47ab-423d-8389-2d96ab888d58",
+		"name": "TrivagoApiTests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET",
+			"item": [
+				{
+					"name": "getAllCategories",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7035543f-5681-440a-9328-fe35fb899761",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"",
+									"});",
+									"",
+									"pm.test(\"Payload contains X number of categories\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    ",
+									"    pm.expect(jsonData.length).to.be.above(0);",
+									"});",
+									"",
+									"",
+									"pm.globals.set(\"category\", pm.response.json()[0]);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.chucknorris.io/jokes/categories",
+							"protocol": "https",
+							"host": [
+								"api",
+								"chucknorris",
+								"io"
+							],
+							"path": [
+								"jokes",
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getRandomJokeByCategory",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "938cb80b-6771-4353-a62a-91a5bae6e357",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Category in response matches the request\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    let categoryResponse = jsonData[\"categories\"][0];",
+									"    let categoryRequest = pm.request.url.query.all()[0].value;",
+									"    console.log(categoryResponse+\",\"+categoryRequest)",
+									"    pm.expect(categoryResponse).to.eql(categoryRequest);",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.chucknorris.io/jokes/random?category={{category}}",
+							"protocol": "https",
+							"host": [
+								"api",
+								"chucknorris",
+								"io"
+							],
+							"path": [
+								"jokes",
+								"random"
+							],
+							"query": [
+								{
+									"key": "category",
+									"value": "{{category}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "verifyJoke",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6a1dc2ec-84f6-4780-83f9-964586d0d4f4",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verify joke String\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    console.log(jsonData);",
+									"    let joke = jsonData[\"value\"];",
+									"    pm.expect(joke).to.include(\"entire song\");",
+									"});",
+									"",
+									"pm.test(\"Verify joke icon url\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    let iconUrl = jsonData[\"icon_url\"];",
+									"    pm.expect(iconUrl).to.match(/\\.(jpeg|jpg|gif|png)$/);",
+									"});",
+									"",
+									"pm.test(\"Verify last modification\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    let updatedDate =new Date(jsonData[\"updated_at\"]);",
+									"    let checkDate  = new Date(\"2016-01-01 10:51:41.584544\");",
+									"    pm.expect(updatedDate).to.be.above(checkDate);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.chucknorris.io/jokes/1BYqNs0MSzmtl9ivZikisA",
+							"protocol": "https",
+							"host": [
+								"api",
+								"chucknorris",
+								"io"
+							],
+							"path": [
+								"jokes",
+								"1BYqNs0MSzmtl9ivZikisA"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "verifyWrongApi",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "39336b8b-33f7-4ed0-b92e-827fb4916767",
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.chucknorris.io/jokes/1BYqNs0MSzmtl9ivZikisAxxxxxx",
+							"protocol": "https",
+							"host": [
+								"api",
+								"chucknorris",
+								"io"
+							],
+							"path": [
+								"jokes",
+								"1BYqNs0MSzmtl9ivZikisAxxxxxx"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
