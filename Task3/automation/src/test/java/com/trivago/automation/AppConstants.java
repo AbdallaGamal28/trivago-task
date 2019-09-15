@@ -1,5 +1,12 @@
 package com.trivago.automation;
 
+/**
+ * @author Abdalla
+ * email  abdalla.gamal.abdalla@gmail.com
+ * date 14-Sep-2019
+ * description 
+ *    ** Utility class to contains the constants and xpaths
+ */
 public class AppConstants {
 
 	public static final String POSITIONS_URL = "https://company.trivago.com/open-positions/";

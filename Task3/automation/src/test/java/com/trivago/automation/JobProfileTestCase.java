@@ -12,6 +12,14 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import static com.trivago.automation.AppConstants.*;
 
+/**
+ * @author Abdalla
+ * email  abdalla.gamal.abdalla@gmail.com
+ * date 14-Sep-2019
+ * description 
+ *    ** this class to test the main page of trivago Job posts
+ */
+
 public class JobProfileTestCase {
 
 	private WebDriver driver;
@@ -24,6 +32,11 @@ public class JobProfileTestCase {
 	public void wait(int seconds) {
 		driver.manage().timeouts().implicitlyWait(seconds, TimeUnit.SECONDS);
 	}
+	/**
+	 * Description 
+	 * 		** This test case is to retrieve the job profiles  and to check if it is dynamically retrieved
+	 * @throws Exception
+	 */
 	
 	@Test
 	public void testJobProfile() throws Exception {
@@ -43,6 +56,21 @@ public class JobProfileTestCase {
 		}
 	}
 
+	/**
+	 * Description
+	 * **This function (checkJobFields) contain all the below
+	 * Job title should have a <h1> tag
+	 *Job Family should have a value
+	 *Experience level should have a value
+	 *Location should have a value
+	 *Language should have a value
+	 *Apply button should be present on the page
+	 *What you’ll do should have a <b> tag
+	 *What you’ll definitely need should have <b> tag
+	 *What we’d love you to have should have <b> tag
+	 **/
+	
+	
 	void checkJobFields() {
 		String jobTitle = driver.findElement(By.xpath(JOB_TITLE)).getTagName();
 		String jobFamily = driver.findElement(By.xpath(JOB_FAMILY)).getText();
